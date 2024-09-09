@@ -5,6 +5,7 @@
 # CR_PAT
 # QUAY_USERNAME
 # QUAY_TOKEN
+# GH_TOKEN
 # The quay repository needs to be created first using the web interface and the
 # robot needs to be given write access to it before pushing to it.
 name: ci
@@ -88,7 +89,7 @@ jobs:
         with:
           tag: ${{ needs.prep.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Fail if tag already exists
         id: set
@@ -170,13 +171,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Login to Quay Registry
-        uses: docker/login-action@v1.10.0
-        if: github.event_name != 'pull_request' && needs.tag-does-not-exist.outputs.exists == 'false'
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_TOKEN }}
+      # - name: Login to Quay Registry
+      #   uses: docker/login-action@v1.10.0
+      #   if: github.event_name != 'pull_request' && needs.tag-does-not-exist.outputs.exists == 'false'
+      #   with:
+      #     registry: quay.io
+      #     username: ${{ secrets.QUAY_USERNAME }}
+      #     password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
@@ -196,9 +197,9 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
-            quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
-            quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
-            quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
+            # quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
+            # quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
+            # quay.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
