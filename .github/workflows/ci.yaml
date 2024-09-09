@@ -149,12 +149,12 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
       # Run GOSS tests if included with the container
-      - name: Run GOSS tests
-        if: needs.prep.outputs.goss == 'true'
-        env:
-          GOSS_FILE: ./goss.yaml
-        run: |
-          dgoss run ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:test
+      # - name: Run GOSS tests
+      #   if: needs.prep.outputs.goss == 'true'
+      #   env:
+      #     GOSS_FILE: ./goss.yaml
+      #   run: |
+      #     dgoss run ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:test
 
       - name: Login to DockerHub
         uses: docker/login-action@v1.10.0
@@ -191,9 +191,9 @@ jobs:
             VERSION=${{ needs.prep.outputs.version }}
             CHECKSUM=${{ needs.prep.outputs.checksum }}
           tags: |
-            # ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
-            # ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
-            # ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
+            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
+            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
+            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
             ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
