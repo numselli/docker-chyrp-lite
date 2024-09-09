@@ -9,7 +9,7 @@ RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
     wget=1.20.3-1ubuntu1 \
-    ca-certificates=20210119~20.04.1 && \
+    ca-certificates && \
   echo "**** download app ****" && \
   mkdir /app && \
   wget -q --no-check-certificate "https://github.com/xenocrat/chyrp-lite/archive/${FILENAME}" && \
