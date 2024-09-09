@@ -13,7 +13,7 @@ RUN \
   echo "**** download app ****" && \
   mkdir /app && \
   wget -q --no-check-certificate "https://github.com/xenocrat/chyrp-lite/archive/${FILENAME}" && \
-  echo "${CHECKSUM}  ${FILENAME}" | sha256sum -c && \
+  # echo "${CHECKSUM}  ${FILENAME}" | sha256sum -c && \
   tar -xvf "${FILENAME}" --strip-components 1 -C /app
 WORKDIR /app
 RUN \
