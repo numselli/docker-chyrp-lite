@@ -35,8 +35,8 @@ RUN \
   set -eux && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    libsqlite3-dev=3.27.2-3+deb10u1 \
-    libxml2-dev=2.9.4+dfsg1-7+deb10u2 && \
+    libsqlite3-dev \
+    libxml2-dev && \
   echo "**** install extensions ****" && \
   docker-php-ext-install \
     session \
