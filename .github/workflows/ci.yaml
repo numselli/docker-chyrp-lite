@@ -163,21 +163,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1.10.0
-        if: github.event_name != 'pull_request'  && needs.tag-does-not-exist.outputs.exists == 'false'
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
-
-      # - name: Login to Quay Registry
+      # - name: Login to GitHub Container Registry
       #   uses: docker/login-action@v1.10.0
-      #   if: github.event_name != 'pull_request' && needs.tag-does-not-exist.outputs.exists == 'false'
+      #   if: github.event_name != 'pull_request'  && needs.tag-does-not-exist.outputs.exists == 'false'
       #   with:
-      #     registry: quay.io
-      #     username: ${{ secrets.QUAY_USERNAME }}
-      #     password: ${{ secrets.QUAY_TOKEN }}
+      #     registry: ghcr.io
+      #     username: ${{ github.repository_owner }}
+      #     password: ${{ secrets.CR_PAT }}
 
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
@@ -194,11 +186,11 @@ jobs:
             ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
             ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
             ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
-            ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
-            ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
-            ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          # ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
+          #   ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
+          #   ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
 
       # This ugly bit is necessary if you don't want your cache to grow forever
       # till it hits GitHub's limit of 5GB.
