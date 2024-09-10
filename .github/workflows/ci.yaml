@@ -160,7 +160,7 @@ jobs:
         uses: docker/login-action@v1.10.0
         if: github.event_name != 'pull_request' && needs.tag-does-not-exist.outputs.exists == 'false'
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}1
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # - name: Login to GitHub Container Registry
@@ -183,9 +183,9 @@ jobs:
             VERSION=${{ needs.prep.outputs.version }}
             CHECKSUM=${{ needs.prep.outputs.checksum }}
           tags: |
-            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
-            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
-            ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
+            ${{ secrets.DOCKERHUB_USERNAM }}/${{needs.prep.outputs.repo_name}}:latest
+            ${{ secrets.DOCKERHUB_USERNAM }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
+            ${{ secrets.DOCKERHUB_USERNAM }}/${{needs.prep.outputs.repo_name}}:version-${{needs.prep.outputs.version}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
           # ghcr.io/${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
