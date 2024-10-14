@@ -37,14 +37,15 @@ RUN \
   apt-get install -y --no-install-recommends \
     libsqlite3-dev \
     libxml2-dev
+    
+# session \
+# json \
+# ctype \
+# xml \
+# simplexml \
 RUN \
   echo "**** install extensions ****" && \
   docker-php-ext-install \
-    session \
-    json \
-    ctype \
-    xml \
-    simplexml \
     pdo_mysql \
     pdo_sqlite && \
   mkdir /data && \
