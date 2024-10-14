@@ -48,13 +48,7 @@ RUN \
     pdo_mysql \
     pdo_sqlite && \
   mkdir /data && \
-  chown -R www-data:www-data /data && \
-  echo "**** cleanup ****" && \
-  apt-get clean && \
-  rm -rf \
-    /tmp/* \
-    /var/lib/apt/lists/ \
-    /var/tmp/*
+  chown -R www-data:www-data /data
 RUN \
   echo "**** cleanup ****" && \
   apt-get clean && \
