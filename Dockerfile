@@ -30,6 +30,7 @@ ARG VERSION
 # hadolint ignore=DL3048
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="nicholaswilde"
+RUN \
   echo "**** install packages ****" && \
   set -eux && \
   apt-get update && \
