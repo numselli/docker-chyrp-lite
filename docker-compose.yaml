@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   chyrplite:
-    image: nicholaswilde/chyrp-lite:latest
+    image: numselli/chyrp-lite:latest
     container_name: chyrp-lite-default
     ports:
       - 80:80
