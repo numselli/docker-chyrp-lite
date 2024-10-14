@@ -24,7 +24,7 @@ RUN \
     ./*.md \
     .gitignore
 
-FROM php:7.4-apache
+FROM php:8.3.13RC1-apache
 ARG BUILD_DATE
 ARG VERSION
 # hadolint ignore=DL3048
